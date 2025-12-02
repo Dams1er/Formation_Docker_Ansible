@@ -1,0 +1,16 @@
+---
+- name: Vérifier le jour s'il est pair ou impair
+  ansible.builtin.template:
+    src: template/jour.j2
+    dest: /etc/jour
+    mode: '0644'
+
+
+
+- name: Afficher la date et l'heure du jour
+  hosts: all
+  tasks:
+    - name: Afficher les facts de date
+      debug:
+        msg: "Date : {{ ansible_date_time.day }}, Heure : {{ ansible_date_time.hour }}"
+

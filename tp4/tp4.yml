@@ -1,0 +1,11 @@
+---
+- name: Install docker
+  hosts: all
+
+  vars:
+    docker_users:
+      - ambient-user
+
+  roles: 
+    - geerlingguy.docker
+
