@@ -1,0 +1,39 @@
+---
+- name: Install and configure apache 2
+  hosts: apache-mysql
+
+  tasks:
+    - name: Instal apache2 and mysql-server
+      apt:
+        name: "{{ item }}" 
+        state: present
+      loop:
+        - apache2
+        - mysql-server
+
+- name: Install and configure git, nginx and cowsay
+  hosts: node1
+
+  tasks:
+    - name: Instal apache2 and mysql-server
+      apt:
+        name: "{{ item }}" 
+        state: present
+      loop:
+        - git
+        - nginx
+        - cowsay
+
+    - name: Récupérer les package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Print the package facts
+      ansible.builtin.debug:
+        var: ansible_facts.packages
+
+    - name: Installer ufw uniquement sur Ubuntu
+      apt:
+        name: ufw
+        state: present
+      when: ansible_distribution == "ubuntu"    
